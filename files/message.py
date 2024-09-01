@@ -12,3 +12,4 @@ class Message:
         self.message_name = input('Enter message name: ')
         self.message_content = input('Enter message content: ')
         self.rot_type = input('Choose rot13 or rot47: ')
+
