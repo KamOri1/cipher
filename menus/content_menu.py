@@ -1,4 +1,4 @@
-class menu:
+class Menu:
     def show_menu(self)-> None:
         menu_list : list = ['New message', 'Open message', 'Exite']
         for index, item in enumerate(menu_list, start=1):
