@@ -20,9 +20,9 @@ class Manager(Menu):
                     case '2': pass
                     case '3': pass
 
-                match self.new_message.encrypted_message()["rot_type"]:
-                    case 'rot13': self.encryption.encrypt_message_rot13(self.new_message.encrypted_message()["text"])
-                    case 'rot47': self.encryption.encrypt_message_rot47(self.new_message.encrypted_message()["text"])
+                match self.new_message.rot_type:
+                    case 'rot13': self.encryption.encrypt_message_rot13(self.new_message.message_content)
+                    case 'rot47': self.encryption.encrypt_message_rot47(self.new_message.message_content)
 
     def show_menu(self):
         super().show_menu()
@@ -31,6 +31,9 @@ class Manager(Menu):
     def execute(self):
         return super().get_choose()
 
-    def show_new_message_options(self)-> dict:
-        self.new_message.add_new_message()
-        return self.new_message.encrypted_message()
+    def show_new_message_options(self)-> None:
+        self.new_message.message_name = input('Enter message name: ')
+        self.new_message.message_content = input('Enter message content: ')
+        self.new_message.rot_type = input('Choose rot13 or rot47: ')
+
+
