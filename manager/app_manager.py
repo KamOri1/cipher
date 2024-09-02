@@ -2,6 +2,7 @@ from cipher.menus.content_menu import Menu
 from cipher.files.message import Message
 from cipher.services.encryption_file import Encryption
 from cipher.helpers.buffer import Buffer
+from cipher.files.saver import SaveFile
 
 
 class Manager(Menu):
@@ -10,6 +11,7 @@ class Manager(Menu):
         self.new_message = Message()
         self.encryption = Encryption()
         self.buffer = Buffer()
+        self.save_file = SaveFile()
         self.open_message = open_message
         self.start_menu()
 
@@ -41,7 +43,7 @@ class Manager(Menu):
         self.new_message.message_content = self.encryption.encrypt_message_rot13(message)
         print(self.new_message.message_content)
         self.collect_message_to_save()
-        return self.new_message.message_content
+        return self.save_message_to_file(self.buffer.buffer_list)
 
     def rot47_encription(self, message):
         self.new_message.message_content = self.encryption.encrypt_message_rot47(message)
@@ -54,4 +56,7 @@ class Manager(Menu):
                                                      text=self.new_message.message_content,
                                                      rot_type=self.new_message.rot_type,
                                                      )
-        self.buffer.message_to_json(collected_message)
+        return self.buffer.message_to_json(collected_message)
+
+    def save_message_to_file(self, message):
+        self.save_file.save_message(message)
