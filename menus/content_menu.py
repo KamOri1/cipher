@@ -3,7 +3,7 @@ class Menu:
 
     @staticmethod
     def show_menu() -> None:
-        for index, item in enumerate(self.OPTIONS, start=1):
+        for index, item in enumerate(Menu.OPTIONS, start=1):
             print(f'{index}. {item}')
 
     @staticmethod
