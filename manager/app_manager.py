@@ -4,6 +4,7 @@ from cipher.services.encryption_file import Encryption
 from cipher.helpers.buffer import Buffer
 from cipher.files.saver import SaveFile
 from cipher.files.reader import ReadFile
+from typing import Type
 
 
 class Manager(Menu):
@@ -28,11 +29,11 @@ class Manager(Menu):
                     case 'rot13': self.rot13_encription(self.new_message.message_content)
                     case 'rot47': self.rot47_encription(self.new_message.message_content)
 
-    def show_menu(self):
+    def show_menu(self) -> str:
         super().show_menu()
         return self.execute()
 
-    def execute(self):
+    def execute(self) -> str:
         return super().get_choose()
 
     def show_new_message_options(self) -> None:
@@ -40,17 +41,15 @@ class Manager(Menu):
         self.new_message.message_content = input('Enter message content: ')
         self.new_message.rot_type = input('Choose rot13 or rot47: ')
 
-    def rot13_encription(self, message):
+    def rot13_encription(self, message: Type[str] | str):
         self.new_message.message_content = self.encryption.encrypt_message_rot13(message)
         self.collect_message_to_save()
 
-
         return self.save_message_to_file(self.buffer.buffer_list[-1])
 
-    def rot47_encription(self, message):
+    def rot47_encription(self, message: Type[str] | str):
         self.new_message.message_content = self.encryption.encrypt_message_rot47(message)
         self.collect_message_to_save()
-
 
         return self.save_message_to_file(self.buffer.buffer_list[-1])
 
@@ -63,10 +62,10 @@ class Manager(Menu):
                                                      )
         return self.buffer.message_to_json(collected_message)
 
-    def save_message_to_file(self, message):
+    def save_message_to_file(self, message: dict) -> None:
         self.save_file.save_message(message)
 
-    def choose_file_to_open(self):
+    def choose_file_to_open(self) -> None:
         file_name = input('Enter the file name: ')
         file_message = self.open_message.read_file(file_name)
         match file_message['rot_type']:
@@ -80,9 +79,9 @@ class Manager(Menu):
                 print(f'Message: {message}')
                 self.rot47_decription(file_message['text'], file_message)
 
-        return(file_message)
 
-    def collect_decription_message_to_save(self, decription_message, encryption_message):
+
+    def collect_decription_message_to_save(self, decription_message: str, encryption_message: dict) -> dict:
         collected_message = self.buffer.get_all_info(
                                                      name=encryption_message['name'],
                                                      text=decription_message,
@@ -91,13 +90,13 @@ class Manager(Menu):
                                                      )
         return self.buffer.message_to_json(collected_message)
 
-    def rot13_decription(self, message, file_message):
+    def rot13_decription(self, message: str, file_message: dict):
         decryption_message = self.encryption.encrypt_message_rot13(message)
         self.collect_decription_message_to_save(decryption_message,file_message)
 
         return self.save_message_to_file(self.buffer.buffer_list[-1])
 
-    def rot47_decription(self, message, file_message):
+    def rot47_decription(self, message: str, file_message: dict):
         decryption_message = self.encryption.encrypt_message_rot47(message)
         self.collect_decription_message_to_save(decryption_message,file_message)
 
