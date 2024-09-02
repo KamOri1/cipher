@@ -1,16 +1,16 @@
 from cipher.menus.content_menu import Menu
 from cipher.files.message import Message
 from cipher.services.encryption_file import Encryption
+from cipher.helpers.buffer import Buffer
 
 
 class Manager(Menu):
-    def __init__(self, open_message, exite):
+    def __init__(self, open_message):
         super().__init__()
         self.new_message = Message()
         self.encryption = Encryption()
+        self.buffer = Buffer()
         self.open_message = open_message
-        self.exite = exite
-
         self.start_menu()
 
     def start_menu(self) -> None:
@@ -38,8 +38,20 @@ class Manager(Menu):
         self.new_message.rot_type = input('Choose rot13 or rot47: ')
 
     def rot13_encription(self, message):
-        return self.encryption.encrypt_message_rot13(message)
+        self.new_message.message_content = self.encryption.encrypt_message_rot13(message)
+        print(self.new_message.message_content)
+        self.collect_message_to_save()
+        return self.new_message.message_content
 
     def rot47_encription(self, message):
-        return self.encryption.encrypt_message_rot47(message)
+        self.new_message.message_content = self.encryption.encrypt_message_rot47(message)
 
+        return self.new_message.message_content
+
+    def collect_message_to_save(self):
+        collected_message = self.buffer.get_all_info(
+                                                     name=self.new_message.message_name,
+                                                     text=self.new_message.message_content,
+                                                     rot_type=self.new_message.rot_type,
+                                                     )
+        self.buffer.message_to_json(collected_message)
