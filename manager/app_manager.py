@@ -43,7 +43,7 @@ class Manager(Menu):
         self.new_message.message_content = self.encryption.encrypt_message_rot13(message)
         print(self.new_message.message_content)
         self.collect_message_to_save()
-        return self.save_message_to_file(self.buffer.buffer_list)
+        return self.save_message_to_file(self.buffer.buffer_list[-1])
 
     def rot47_encription(self, message):
         self.new_message.message_content = self.encryption.encrypt_message_rot47(message)
