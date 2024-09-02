@@ -9,6 +9,5 @@ class Buffer:
         return complex_message
 
     def message_to_json(self, message: dict) -> json:
-        message_json = json.dumps(message)
-        self.buffer_list.append(message_json)
+        message_json = self.buffer_list.append(message)
         return message_json
