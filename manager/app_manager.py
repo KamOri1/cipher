@@ -2,6 +2,7 @@ from cipher.menus.content_menu import Menu
 from cipher.files.message import Message
 from cipher.services.encryption_file import Encryption
 
+
 class Manager(Menu):
     def __init__(self, open_message, exite):
         super().__init__()
@@ -12,7 +13,7 @@ class Manager(Menu):
 
         self.start_menu()
 
-    def start_menu(self)-> None:
+    def start_menu(self) -> None:
             while True:
                 first_choose = self.show_menu()
                 match first_choose:
@@ -31,7 +32,7 @@ class Manager(Menu):
     def execute(self):
         return super().get_choose()
 
-    def show_new_message_options(self)-> None:
+    def show_new_message_options(self) -> None:
         self.new_message.message_name = input('Enter message name: ')
         self.new_message.message_content = input('Enter message content: ')
         self.new_message.rot_type = input('Choose rot13 or rot47: ')
