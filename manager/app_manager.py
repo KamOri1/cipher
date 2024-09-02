@@ -59,6 +59,7 @@ class Manager(Menu):
                                                      name=self.new_message.message_name,
                                                      text=self.new_message.message_content,
                                                      rot_type=self.new_message.rot_type,
+                                                     status='encryption'
                                                      )
         return self.buffer.message_to_json(collected_message)
 
@@ -86,7 +87,7 @@ class Manager(Menu):
                                                      name=encryption_message['name'],
                                                      text=decription_message,
                                                      rot_type=encryption_message['rot_type'],
-                                                     status='decription'
+                                                     status='decryption'
                                                      )
         return self.buffer.message_to_json(collected_message)
 
