@@ -3,6 +3,7 @@ from cipher.files.message import Message
 from cipher.services.encryption_file import Encryption
 from cipher.helpers.buffer import Buffer
 from cipher.files.saver import SaveFile
+from cipher.files.reader import ReadFile
 
 
 class Manager(Menu):
@@ -12,7 +13,7 @@ class Manager(Menu):
         self.encryption = Encryption()
         self.buffer = Buffer()
         self.save_file = SaveFile()
-        self.open_message = open_message
+        self.open_message = ReadFile()
         self.start_menu()
 
     def start_menu(self) -> None:
@@ -20,7 +21,7 @@ class Manager(Menu):
                 first_choose = self.show_menu()
                 match first_choose:
                     case '1': self.show_new_message_options()
-                    case '2': pass
+                    case '2': self.choose_file_to_open()
                     case '3': break
 
                 match self.new_message.rot_type:
@@ -41,14 +42,17 @@ class Manager(Menu):
 
     def rot13_encription(self, message):
         self.new_message.message_content = self.encryption.encrypt_message_rot13(message)
-        print(self.new_message.message_content)
         self.collect_message_to_save()
+
+
         return self.save_message_to_file(self.buffer.buffer_list[-1])
 
     def rot47_encription(self, message):
         self.new_message.message_content = self.encryption.encrypt_message_rot47(message)
+        self.collect_message_to_save()
 
-        return self.new_message.message_content
+
+        return self.save_message_to_file(self.buffer.buffer_list[-1])
 
     def collect_message_to_save(self):
         collected_message = self.buffer.get_all_info(
@@ -60,3 +64,40 @@ class Manager(Menu):
 
     def save_message_to_file(self, message):
         self.save_file.save_message(message)
+
+    def choose_file_to_open(self):
+        file_name = input('Enter the file name: ')
+        file_message = self.open_message.read_file(file_name)
+        match file_message['rot_type']:
+            case 'rot13':
+                message = self.encryption.encrypt_message_rot13(file_message['text'])
+                print(f'Message: {message}')
+                self.rot13_decription(file_message['text'], file_message)
+
+            case 'rot47':
+                message = self.encryption.encrypt_message_rot47(file_message['text'])
+                print(f'Message: {message}')
+                self.rot47_decription(file_message['text'], file_message)
+
+        return(file_message)
+
+    def collect_decription_message_to_save(self, decription_message, encryption_message):
+        collected_message = self.buffer.get_all_info(
+                                                     name=encryption_message['name'],
+                                                     text=decription_message,
+                                                     rot_type=encryption_message['rot_type'],
+                                                     status='decription'
+                                                     )
+        return self.buffer.message_to_json(collected_message)
+
+    def rot13_decription(self, message, file_message):
+        decryption_message = self.encryption.encrypt_message_rot13(message)
+        self.collect_decription_message_to_save(decryption_message,file_message)
+
+        return self.save_message_to_file(self.buffer.buffer_list[-1])
+
+    def rot47_decription(self, message, file_message):
+        decryption_message = self.encryption.encrypt_message_rot47(message)
+        self.collect_decription_message_to_save(decryption_message,file_message)
+
+        return self.save_message_to_file(self.buffer.buffer_list[-1])
