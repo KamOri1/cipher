@@ -1,57 +1,77 @@
 from cipher.menus.content_menu import Menu
 from cipher.files.message import Message
-from cipher.services.encryption_file import Encryption
-from cipher.helpers.buffer import Buffer
+from cipher.services import rot_factory, ROT_TYPE_13, ROT_TYPE_47
 from cipher.files.saver import SaveFile
 from cipher.files.reader import ReadFile
 from typing import Type
 
+# class A:
+#     def str(self):
+#         return 'class A'
+#
+# class B(A):
+#     def str(self):
+#         # albo nadpisujesz calkowicie
+#         # albo chcesz uzyć str'a z klasy nadrzednej wtedy super()
+#         # albo nie nadpisujesz w ogóle i używasz po prostu str z klasy A
+#         old_str = super().str()
+#         old_str += 'class B'
+#         return old_str
+#
+# class ASuper(A):
+#     def method(self):
+#         ...
+#
+# a = ASuper()
+# a.str()
+
+# 1. User zapisuje cos do buffera jedna lub wiele wiadomosci mzoe zapisac do pliku / moze dodac pliku
+# 2. user moze wczytac z pliku wiadomosci, dodac kolejna wiadomosc i zapisac do pliku z nowa wiadomscia
+# 3. czyszczenie buffera*.
 
 class Manager(Menu):
-    def __init__(self, open_message):
-        super().__init__()
-        self.new_message = Message()
-        self.encryption = Encryption()
-        self.buffer = Buffer()
-        self.save_file = SaveFile()
-        self.open_message = ReadFile()
+    def __init__(self, buffer):
+        self.buffer = buffer
+        self.save_file = SaveFile() # Metody statyczne zamiast obiektów i uzywanie bezpośrednio na klasie
+        self.open_message = ReadFile() # Metody statyczne zamiast obiektów i uzywanie bezpośrednio na klasie
         self.start_menu()
 
     def start_menu(self) -> None:
-            while True:
-                first_choose = self.show_menu()
-                match first_choose:
-                    case '1': self.show_new_message_options()
-                    case '2': self.choose_file_to_open()
-                    case '3': break
+        while True:
+            self.show_menu()
+            first_choose = self.get_choose()
+            match first_choose:
+                case '1':
+                    rot_type = self.choose_rot()
+                    match rot_type:
+                        case 'rot13': self.encrypt_message(rot_type=ROT_TYPE_13)
+                        case 'rot47': self.encrypt_message(rot_type=ROT_TYPE_47)
+                case '2': self.choose_file_to_open()
+                case '3': ... # save_buffer_to_file()
+                case '4': break
 
-                match self.new_message.rot_type:
-                    case 'rot13': self.rot13_encription(self.new_message.message_content)
-                    case 'rot47': self.rot47_encription(self.new_message.message_content)
 
-    def show_menu(self) -> str:
-        super().show_menu()
-        return self.execute()
 
-    def execute(self) -> str:
-        return super().get_choose()
+    def choose_rot(self):
+        return input('Enter ROT type: ')
 
-    def show_new_message_options(self) -> None:
-        self.new_message.message_name = input('Enter message name: ')
-        self.new_message.message_content = input('Enter message content: ')
-        self.new_message.rot_type = input('Choose rot13 or rot47: ')
+    def get_message_data(self, rot_type, operation) -> Message: # get_message_data
+        # Zwracania info od user'a zaimast od razu przypisywac.
+        name = input('Enter message name: ')
+        content = input('Enter message content: ')
 
-    def rot13_encription(self, message: Type[str] | str):
-        self.new_message.message_content = self.encryption.encrypt_message_rot13(message)
+        return Message(name=name, content=content, rot_type=rot_type, status=operation)
+
+
+
+    def encrypt_message(self, rot_type):
+        message = self.get_message_data(rot_type, operation='Encrypting')
+        encryptor = rot_factory(rot_type)
+        message.message_content = encryptor.encrypt(message)
         self.collect_message_to_save()
 
         return self.save_message_to_file(self.buffer.buffer_list[-1])
 
-    def rot47_encription(self, message: Type[str] | str):
-        self.new_message.message_content = self.encryption.encrypt_message_rot47(message)
-        self.collect_message_to_save()
-
-        return self.save_message_to_file(self.buffer.buffer_list[-1])
 
     def collect_message_to_save(self):
         collected_message = self.buffer.get_all_info(
@@ -92,12 +112,12 @@ class Manager(Menu):
 
     def rot13_decription(self, message: str, file_message: dict):
         decryption_message = self.encryption.encrypt_message_rot13(message)
-        self.collect_decription_message_to_save(decryption_message,file_message)
+        self.collect_decription_message_to_save(decryption_message, file_message)
 
         return self.save_message_to_file(self.buffer.buffer_list[-1])
 
     def rot47_decription(self, message: str, file_message: dict):
         decryption_message = self.encryption.encrypt_message_rot47(message)
-        self.collect_decription_message_to_save(decryption_message,file_message)
+        self.collect_decription_message_to_save(decryption_message, file_message)
 
         return self.save_message_to_file(self.buffer.buffer_list[-1])
