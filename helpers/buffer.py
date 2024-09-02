@@ -13,5 +13,5 @@ class Buffer:
         message_json = self.buffer_list.append(message)
         return message_json
 
-    def get_last_message(self) -> 'Message':
+    def get_last_message(self) -> dict:
         return self.buffer_list[-1]
