@@ -67,13 +67,10 @@ class Manager(Menu):
     def encrypt_message(self, rot_type):
         message = self.get_message_data(rot_type, operation='Encrypting')
         encryptor = rot_factory(rot_type)
-
         message.content = encryptor.encrypt(message)
-        print(f'=============================={message.content}')
-        print(f'=============================={message.__dict__}')
         self.collect_message_to_save(message.__dict__)
 
-        return self.save_message_to_file(self.buffer.get_last_messag())
+        return self.save_message_to_file(self.buffer.get_last_message())
 
 
     def collect_message_to_save(self, message):
