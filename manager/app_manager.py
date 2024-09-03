@@ -70,7 +70,7 @@ class Manager(Menu):
         message.message_content = encryptor.encrypt(message)
         self.collect_message_to_save()
 
-        return self.save_message_to_file(self.buffer.buffer_list[-1])
+        return self.save_message_to_file(self.buffer.get_last_messag())
 
 
     def collect_message_to_save(self):
