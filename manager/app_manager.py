@@ -3,27 +3,6 @@ from cipher.files.message import Message
 from cipher.services import rot_factory, ROT_TYPE_13, ROT_TYPE_47
 from cipher.files.saver import SaveFile
 from cipher.files.reader import ReadFile
-from typing import Type
-
-# class A:
-#     def str(self):
-#         return 'class A'
-#
-# class B(A):
-#     def str(self):
-#         # albo nadpisujesz calkowicie
-#         # albo chcesz uzyć str'a z klasy nadrzednej wtedy super()
-#         # albo nie nadpisujesz w ogóle i używasz po prostu str z klasy A
-#         old_str = super().str()
-#         old_str += 'class B'
-#         return old_str
-#
-# class ASuper(A):
-#     def method(self):
-#         ...
-#
-# a = ASuper()
-# a.str()
 
 # 1. User zapisuje cos do buffera jedna lub wiele wiadomosci mzoe zapisac do pliku / moze dodac pliku
 # 2. user moze wczytac z pliku wiadomosci, dodac kolejna wiadomosc i zapisac do pliku z nowa wiadomscia
@@ -32,8 +11,6 @@ from typing import Type
 class Manager(Menu):
     def __init__(self, buffer):
         self.buffer = buffer
-        self.save_file = SaveFile() # Metody statyczne zamiast obiektów i uzywanie bezpośrednio na klasie
-        self.open_message = ReadFile() # Metody statyczne zamiast obiektów i uzywanie bezpośrednio na klasie
         self.start_menu()
 
     def start_menu(self) -> None:
@@ -50,19 +27,16 @@ class Manager(Menu):
                 case '3': ... # save_buffer_to_file()
                 case '4': break
 
-
-
-    def choose_rot(self):
+    @staticmethod
+    def choose_rot():
         return input('Enter ROT type: ')
 
-    def get_message_data(self, rot_type, operation) -> Message: # get_message_data
-        # Zwracania info od user'a zaimast od razu przypisywac.
+    @staticmethod
+    def get_message_data(rot_type, operation) -> Message:
         name = input('Enter message name: ')
         content = input('Enter message content: ')
 
         return Message(name=name, content=content, rot_type=rot_type, status=operation)
-
-
 
     def encrypt_message(self, rot_type):
         message = self.get_message_data(rot_type, operation='Encrypting')
@@ -77,11 +51,11 @@ class Manager(Menu):
         return self.buffer.message_to_json(message)
 
     def save_message_to_file(self, message: dict) -> None:
-        self.save_file.save_message(message)
+       SaveFile.save_message(message)
 
     def choose_file_to_open(self) -> None:
         file_name = input('Enter the file name: ')
-        file_message = self.open_message.read_file(file_name)
+        file_message = ReadFile.read_file(file_name)
         match file_message['rot_type']:
             case 'rot13':
                 message = self.encryption.encrypt_message_rot13(file_message['text'])
