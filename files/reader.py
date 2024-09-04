@@ -15,3 +15,4 @@ class ReadFile:
         for index, value in enumerate(file_content, start=1):
             print(f'{index}: {value}')
 
+

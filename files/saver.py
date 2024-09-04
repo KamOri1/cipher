@@ -17,3 +17,13 @@ class SaveFile:
 
         with open(f'{FILES_DIR}{file_name}.json', 'w') as file:
              json.dump(file_content, file, indent=4)
+
+
+    @staticmethod
+    def save_decrypted_content(file_name, file_content, user_choose, decrypted_message):
+        file_content[user_choose]['content'] = decrypted_message
+        file_content[user_choose]['status'] = 'Decrypting'
+        decrypted = file_content
+
+        with open(f'{FILES_DIR}{file_name}.json', 'w') as file:
+            json.dump(decrypted, file, indent=4)

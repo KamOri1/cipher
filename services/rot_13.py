@@ -6,7 +6,10 @@ class Rot13(Rot):
     ALPHABET = string.ascii_lowercase
 
     def encrypt(self, plain_text):
-        message: str = plain_text.content.lower()
+        if isinstance(plain_text, dict):
+            message: str = plain_text['content']
+        else:
+            message: str = plain_text.content.lower()
         shifted_alphabet: str = self.ALPHABET[13:] + self.ALPHABET[:13]
         encrypted: dict = str.maketrans(self.ALPHABET, shifted_alphabet)
         encrypted_message: str = message.translate(encrypted)

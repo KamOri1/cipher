@@ -46,6 +46,11 @@ class Manager(Menu):
         file_name = input('Enter file name: ')
         return self.save_message_to_file(self.buffer.get_last_message(), file_name)
 
+    def decrypt_message(self, rot_type, message):
+        decrypt = rot_factory(rot_type)
+        decrypt_message = decrypt.decrypt(message)
+        print(f'\nMessage: {decrypt_message}\n')
+        return decrypt_message
 
     def collect_message_to_save(self, message):
         return self.buffer.message_to_json(message)
@@ -57,37 +62,20 @@ class Manager(Menu):
         file_name = input('Enter the file name: ')
         file_message = ReadFile.read_file(file_name)
         ReadFile.print_file_content(file_name=file_name, file_content=file_message)
-        print(file_message)
-        match file_message['rot_type']:
-            case 'rot13':
-                message = self.encryption.encrypt_message_rot13(file_message['text'])
-                print(f'Message: {message}')
-                self.rot13_decription(file_message['text'], file_message)
+        choose_file = int(input(f'Enter choose file to open: 1-{len(file_message)}: '))  - 1
 
-            case 'rot47':
-                message = self.encryption.encrypt_message_rot47(file_message['text'])
-                print(f'Message: {message}')
-                self.rot47_decription(file_message['text'], file_message)
+        match file_message[choose_file]['rot_type']:
+            case 'rot_13':
+                message = self.decrypt_message(rot_type=ROT_TYPE_13, message=file_message[choose_file])
+                SaveFile.save_decrypted_content(file_name=file_name,
+                                                file_content=file_message,
+                                                user_choose=choose_file,
+                                                decrypted_message=message)
 
+            case 'rot_47':
+                    message = self.decrypt_message(rot_type=ROT_TYPE_47, message=file_message[choose_file])
+                    SaveFile.save_decrypted_content(file_name=file_name,
+                                                    file_content=file_message,
+                                                    user_choose=choose_file,
+                                                    decrypted_message=message)
 
-
-    def collect_decription_message_to_save(self, decription_message: str, encryption_message: dict) -> dict:
-        collected_message = self.buffer.get_all_info(
-                                                     name=encryption_message['name'],
-                                                     text=decription_message,
-                                                     rot_type=encryption_message['rot_type'],
-                                                     status='decryption'
-                                                     )
-        return self.buffer.message_to_json(collected_message)
-
-    def rot13_decription(self, message: str, file_message: dict):
-        decryption_message = self.encryption.encrypt_message_rot13(message)
-        self.collect_decription_message_to_save(decryption_message, file_message)
-
-        return self.save_message_to_file(self.buffer.buffer_list[-1])
-
-    def rot47_decription(self, message: str, file_message: dict):
-        decryption_message = self.encryption.encrypt_message_rot47(message)
-        self.collect_decription_message_to_save(decryption_message, file_message)
-
-        return self.save_message_to_file(self.buffer.buffer_list[-1])
