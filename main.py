@@ -1,8 +1,9 @@
 from cipher.manager.app_manager import Manager
-
+from cipher.helpers.buffer import Buffer
 
 def main():
-    manager = Manager(1)
+    buffer = Buffer()
+    manager = Manager(buffer)
 
 
 if __name__ == '__main__':
