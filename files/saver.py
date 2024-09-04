@@ -1,6 +1,7 @@
 import json
 from cipher.consts import FILES_DIR
 import string
+
 class SaveFile:
     @staticmethod
     def save_message(all_message_information: dict) -> None:
@@ -16,7 +17,3 @@ class SaveFile:
 
         with open(f'{FILES_DIR}{file_name}.json', 'w') as file:
              json.dump(file_content, file, indent=4)
-
-
-
-
