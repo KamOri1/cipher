@@ -4,8 +4,8 @@ import string
 
 class SaveFile:
     @staticmethod
-    def save_message(all_message_information: dict) -> None:
-        with open(f'{FILES_DIR}{all_message_information["name"]}.json', 'w') as file:
+    def save_message(all_message_information: dict, file_name) -> None:
+        with open(f'{FILES_DIR}{file_name}.json', 'w') as file:
             json.dump([all_message_information], file)
 
     @staticmethod

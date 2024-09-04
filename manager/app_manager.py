@@ -43,19 +43,21 @@ class Manager(Menu):
         encryptor = rot_factory(rot_type)
         message.content = encryptor.encrypt(message)
         self.collect_message_to_save(message)
-
-        return self.save_message_to_file(self.buffer.get_last_message())
+        file_name = input('Enter file name: ')
+        return self.save_message_to_file(self.buffer.get_last_message(), file_name)
 
 
     def collect_message_to_save(self, message):
         return self.buffer.message_to_json(message)
 
-    def save_message_to_file(self, message: dict) -> None:
-       SaveFile.save_message(message)
+    def save_message_to_file(self, message: dict, file_name) -> None:
+       SaveFile.save_message(message, file_name)
 
     def choose_file_to_open(self) -> None:
         file_name = input('Enter the file name: ')
         file_message = ReadFile.read_file(file_name)
+        ReadFile.print_file_content(file_name=file_name, file_content=file_message)
+        print(file_message)
         match file_message['rot_type']:
             case 'rot13':
                 message = self.encryption.encrypt_message_rot13(file_message['text'])
