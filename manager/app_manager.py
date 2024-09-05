@@ -1,4 +1,5 @@
 from cipher.menus.content_menu import Menu
+from cipher.menus.sub_menu import SubMenu
 from cipher.files.message import Message
 from cipher.services import rot_factory, ROT_TYPE_13, ROT_TYPE_47
 from cipher.files.saver import SaveFile
@@ -43,6 +44,7 @@ class Manager(Menu):
         encryptor = rot_factory(rot_type)
         message.content = encryptor.encrypt(message)
         self.collect_message_to_save(message)
+        SubMenu.show_sub_menu(SubMenu.NEW_MESSAGE_OPTIONS)
         file_name = input('Enter file name: ')
         return self.save_message_to_file(self.buffer.get_last_message(), file_name)
 
