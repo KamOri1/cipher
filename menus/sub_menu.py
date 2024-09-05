@@ -1,7 +1,7 @@
 class SubMenu:
     NEW_MESSAGE_OPTIONS = ['Add next message', 'Save message']
     SAVE_OPTIONS = ['One message one file', 'All in one file ']
-
+    DECRYPT_OR_ADD = ['Decrypt message', 'Add message to the file']
 
     @staticmethod
     def show_sub_menu(options) -> None:
@@ -12,3 +12,5 @@ class SubMenu:
     def get_choose() -> str:
         choose: str = input('What you want to do now? Choose 1-2: ')
         return choose
+
+

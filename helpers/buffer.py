@@ -16,3 +16,7 @@ class Buffer:
 
     def get_last_message(self) -> dict:
         return self.buffer_list[-1]
+
+    def add_next_message(self, message: dict):
+
+        print(self.buffer_list)
