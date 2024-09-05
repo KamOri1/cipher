@@ -3,7 +3,7 @@ from cipher.helpers.buffer import Buffer
 
 def main():
     buffer = Buffer()
-    manager = Manager(buffer)
+    Manager(buffer)
 
 
 if __name__ == '__main__':
