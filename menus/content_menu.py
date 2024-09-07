@@ -1,5 +1,5 @@
 class Menu:
-    OPTIONS = ['New message', 'Open message', 'Exite']
+    OPTIONS = ['New message', 'Open message','Save buffer', 'Exite']
 
     @staticmethod
     def show_menu() -> None:
