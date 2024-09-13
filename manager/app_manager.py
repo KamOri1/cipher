@@ -1,4 +1,5 @@
 from cipher.menus.content_menu import Menu
+from cipher.menus.menu_consts import MenuConsts
 from cipher.menus.sub_menu import SubMenu
 from cipher.files.message import Message
 from cipher.services import rot_factory, ROT_TYPE_13, ROT_TYPE_47
@@ -16,7 +17,7 @@ class Manager(Menu):
 
     def start_menu(self) -> None:
         while True:
-            self.show_menu()
+            self.show_menu(MenuConsts.OPTIONS)
             first_choose = self.get_choose()
             match first_choose:
                 case '1':
@@ -76,7 +77,7 @@ class Manager(Menu):
         file_name = input('Enter the file name: ')
         file_message = ReadFile.read_file(file_name)
         ReadFile.print_file_content(file_name=file_name, file_content=file_message)
-        SubMenu.show_sub_menu(SubMenu.DECRYPT_OR_ADD)
+        SubMenu.show_sub_menu(MenuConsts.DECRYPT_OR_ADD)
         user_choose = input('Enter yours choose: ')
         match user_choose:
 
