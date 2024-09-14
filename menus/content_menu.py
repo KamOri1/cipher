@@ -1,8 +1,6 @@
 
 
 class Menu:
-    #OPTIONS = ['New message', 'Open message','Save buffer', 'Exite']
-
     @staticmethod
     def show_menu(menu_options) -> None:
         for index, item in enumerate(menu_options, start=1):

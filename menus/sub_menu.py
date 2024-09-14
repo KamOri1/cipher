@@ -1,8 +1,4 @@
 class SubMenu:
-    # NEW_MESSAGE_OPTIONS = ['Add next message', 'Save message']
-    # SAVE_OPTIONS = ['One message one file', 'All in one file ']
-    # DECRYPT_OR_ADD = ['Decrypt message', 'Add message to the file']
-
     @staticmethod
     def show_sub_menu(options) -> None:
         for index, item in enumerate(options, start=1):
