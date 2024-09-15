@@ -1,6 +1,7 @@
 import json
 from cipher.consts import FILES_DIR
 
+
 class ReadFile:
     @staticmethod
     def read_file(file_name: str) -> list:
