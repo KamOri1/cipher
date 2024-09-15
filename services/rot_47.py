@@ -3,7 +3,7 @@ from .rot import Rot
 
 
 class Rot47(Rot):
-    ALPHABET_47 =string.ascii_lowercase + string.punctuation + string.digits + string.ascii_uppercase
+    ALPHABET_47 = string.ascii_lowercase + string.punctuation + string.digits + string.ascii_uppercase
 
     def encrypt(self, plain_text):
         if isinstance(plain_text, dict):
