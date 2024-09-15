@@ -1,5 +1,3 @@
-
-
 class Menu:
     @staticmethod
     def show_menu(menu_options) -> None:
@@ -8,5 +6,5 @@ class Menu:
 
     @staticmethod
     def get_choose() -> str:
-        choose: str = input('What you want to do now? Choose 1-3: ')
+        choose: str = input('What you want to do now? Choose 1-4: ')
         return choose

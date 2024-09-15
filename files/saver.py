@@ -36,8 +36,3 @@ class SaveFile:
         match status:
             case 'Decrypting': return 'Encrypting'
             case 'Encrypting': return 'Decrypting'
-
-    @staticmethod
-    def save_buffer_all_in_one_file(buffer_list: list):
-        file_name = input('Enter file name: ')
-        SaveFile.save_message(buffer_list, file_name)

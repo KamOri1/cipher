@@ -6,9 +6,6 @@ from cipher.services import rot_factory, ROT_TYPE_13, ROT_TYPE_47
 from cipher.files.saver import SaveFile
 from cipher.files.reader import ReadFile
 
-# 1. User zapisuje cos do buffera jedna lub wiele wiadomosci mzoe zapisac do pliku / moze dodac pliku
-# 2. user moze wczytac z pliku wiadomosci, dodac kolejna wiadomosc i zapisac do pliku z nowa wiadomscia
-# 3. czyszczenie buffera*.
 
 class Manager(Menu):
     def __init__(self, buffer):
@@ -26,7 +23,7 @@ class Manager(Menu):
                         case 'rot13': self.encrypt_message(rot_type=ROT_TYPE_13, fast_save='save')
                         case 'rot47': self.encrypt_message(rot_type=ROT_TYPE_47, fast_save='save')
                 case '2': self.choose_file_to_open()
-                case '3': self.save_buffer_all_in_one_file() # save_buffer_to_file()
+                case '3': self.buffer_options()
                 case '4': break
 
     @staticmethod
@@ -51,13 +48,14 @@ class Manager(Menu):
                 return self.save_message_to_file(self.buffer.get_last_message(), file_name)
         return self.buffer.get_last_message()
 
-    def save_buffer_all_in_one_file(self):
-        file_name = input('Enter file name: ')
-        SaveFile.save_message(self.buffer.buffer_list, file_name)
-
-    #def save_buffer_one_message_one_file(self):
-
-
+    def buffer_options(self):
+        self.show_menu(MenuConsts.BUFFER_OPTIONS)
+        choose = self.get_choose()
+        match choose:
+            case '1':
+                self.buffer.save_buffer()
+            case '2':
+                self.buffer.clear_buffer()
 
     def decrypt_message(self, rot_type, message):
         decrypt = rot_factory(rot_type)
