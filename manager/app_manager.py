@@ -78,7 +78,6 @@ class Manager(Menu):
         SubMenu.show_sub_menu(MenuConsts.DECRYPT_OR_ADD)
         user_choose = input('Enter yours choose: ')
         match user_choose:
-
             case '1':
                 choose_file = int(input(f'Enter choose file to open: 1-{len(file_message)}: ')) - 1
                 match file_message[choose_file]['rot_type']:
