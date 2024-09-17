@@ -8,7 +8,7 @@ from cipher.files.reader import ReadFile
 
 
 class Manager(Menu):
-    def __init__(self, buffer):
+    def __init__(self, buffer) -> None:
         self.buffer = buffer
         self.start_menu()
 
@@ -27,7 +27,7 @@ class Manager(Menu):
                 case '4': break
 
     @staticmethod
-    def choose_rot():
+    def choose_rot() -> input:
         return input('Enter ROT type: ')
 
     @staticmethod
@@ -58,17 +58,17 @@ class Manager(Menu):
                 self.buffer.clear_buffer()
 
     @staticmethod
-    def decrypt_message(rot_type, message):
+    def decrypt_message(rot_type: str, message: str) -> str:
         decrypt = rot_factory(rot_type)
         decrypt_message = decrypt.decrypt(message)
         print(f'\nMessage: {decrypt_message}\n')
         return decrypt_message
 
-    def collect_message_to_save(self, message):
+    def collect_message_to_save(self, message: object) -> dict:
         return self.buffer.message_to_json(message)
 
     @staticmethod
-    def save_message_to_file(message: dict, file_name) -> None:
+    def save_message_to_file(message: dict, file_name: str) -> None:
         SaveFile.save_message(message, file_name)
 
     def choose_file_to_open(self) -> None:
@@ -101,10 +101,3 @@ class Manager(Menu):
                     case 'rot13': SaveFile.add_message_to_file(file_name, self.encrypt_message(rot_type=ROT_TYPE_13))
 
                     case 'rot47': SaveFile.add_message_to_file(file_name, self.encrypt_message(rot_type=ROT_TYPE_47))
-
-
-
-
-
-
-
