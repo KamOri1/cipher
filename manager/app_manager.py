@@ -31,24 +31,28 @@ class Manager(Menu):
         return input('Enter ROT type: ')
 
     @staticmethod
+    def file_name() -> input:
+        return input('Enter file name: ')
+
+    @staticmethod
     def get_message_data(rot_type, operation) -> Message:
         name = input('Enter message name: ')
         content = input('Enter message content: ')
 
         return Message(name=name, content=content, rot_type=rot_type, status=operation)
 
-    def encrypt_message(self, rot_type, fast_save=None):
+    def encrypt_message(self, rot_type, fast_save=None) -> dict:
         message = self.get_message_data(rot_type, operation='Encrypting')
         encryptor = rot_factory(rot_type)
         message.content = encryptor.encrypt(message)
         self.collect_message_to_save(message)
         match fast_save:
             case 'save':
-                file_name = input('Enter file name: ')
-                return Manager.save_message_to_file(self.buffer.get_last_message(), file_name)
+                file_name = self.file_name()
+                Manager.save_message_to_file(self.buffer.get_last_message(), file_name)
         return self.buffer.get_last_message()
 
-    def buffer_options(self):
+    def buffer_options(self) -> None:
         self.show_menu(MenuConsts.BUFFER_OPTIONS)
         choose = self.get_choose()
         match choose:
@@ -73,21 +77,21 @@ class Manager(Menu):
         SaveFile.save_message(message, file_name)
 
     def choose_file_to_open(self) -> None:
-        file_name = input('Enter the file name: ')
+        file_name = self.file_name()
         file_message = ReadFile.read_file(file_name)
         ReadFile.print_file_content(file_name=file_name, file_content=file_message)
-        SubMenu.show_sub_menu(MenuConsts.DECRYPT_OR_ADD)
-        user_choose = input('Enter yours choose: ')
+        user_choose = SubMenu.show_sub_menu(MenuConsts.DECRYPT_OR_ADD)
         match user_choose:
             case '1':
-                choose_file = int(input(f'Enter choose file to open: 1-{len(file_message)}: ')) - 1
+                choose_file = int(input(f'Choose message: 1-{len(file_message)}: ')) - 1
                 message = Manager.decrypt_message(rot_type=file_message[choose_file]['rot_type'],
                                                   message=file_message[choose_file])
+
                 SaveFile.save_decrypted_content(file_name=file_name,
                                                 file_content=file_message,
                                                 user_choose=choose_file,
                                                 decrypted_message=message)
             case '2':
                 rot_type = self.choose_rot()
-                rot = {'rot13': ROT_TYPE_13, 'rot47': ROT_TYPE_13}
+                rot = {'rot13': ROT_TYPE_13, 'rot47': ROT_TYPE_47}
                 SaveFile.add_message_to_file(file_name, self.encrypt_message(rot_type=rot[rot_type]))
