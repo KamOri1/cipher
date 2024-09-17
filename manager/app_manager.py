@@ -62,6 +62,7 @@ class Manager(Menu):
         decrypt = rot_factory(rot_type)
         decrypt_message = decrypt.decrypt(message)
         print(f'\nMessage: {decrypt_message}\n')
+
         return decrypt_message
 
     def collect_message_to_save(self, message: object) -> dict:
@@ -80,24 +81,13 @@ class Manager(Menu):
         match user_choose:
             case '1':
                 choose_file = int(input(f'Enter choose file to open: 1-{len(file_message)}: ')) - 1
-                match file_message[choose_file]['rot_type']:
-                    case 'rot_13':
-                        message = Manager.decrypt_message(rot_type=ROT_TYPE_13, message=file_message[choose_file])
-                        SaveFile.save_decrypted_content(file_name=file_name,
-                                                        file_content=file_message,
-                                                        user_choose=choose_file,
-                                                        decrypted_message=message)
-
-                    case 'rot_47':
-                        message = Manager.decrypt_message(rot_type=ROT_TYPE_47, message=file_message[choose_file])
-                        SaveFile.save_decrypted_content(file_name=file_name,
-                                                        file_content=file_message,
-                                                        user_choose=choose_file,
-                                                        decrypted_message=message)
-
+                message = Manager.decrypt_message(rot_type=file_message[choose_file]['rot_type'],
+                                                  message=file_message[choose_file])
+                SaveFile.save_decrypted_content(file_name=file_name,
+                                                file_content=file_message,
+                                                user_choose=choose_file,
+                                                decrypted_message=message)
             case '2':
                 rot_type = self.choose_rot()
-                match rot_type:
-                    case 'rot13': SaveFile.add_message_to_file(file_name, self.encrypt_message(rot_type=ROT_TYPE_13))
-
-                    case 'rot47': SaveFile.add_message_to_file(file_name, self.encrypt_message(rot_type=ROT_TYPE_47))
+                rot = {'rot13': ROT_TYPE_13, 'rot47': ROT_TYPE_13}
+                SaveFile.add_message_to_file(file_name, self.encrypt_message(rot_type=rot[rot_type]))

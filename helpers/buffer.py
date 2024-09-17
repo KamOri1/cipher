@@ -12,9 +12,9 @@ class Buffer:
     def get_last_message(self) -> dict:
         return self.buffer_list[-1]
 
-    def clear_buffer(self):
+    def clear_buffer(self) -> None:
         self.buffer_list.clear()
 
-    def save_buffer(self):
+    def save_buffer(self) -> None:
         file_name = input('Enter file name: ')
         SaveFile.save_message(self.buffer_list, file_name)
