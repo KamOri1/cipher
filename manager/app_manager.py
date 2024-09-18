@@ -15,7 +15,7 @@ class Manager(Menu):
     def start_menu(self) -> None:
         while True:
             self.show_menu(MenuConsts.OPTIONS)
-            first_choose = self.get_choose()
+            first_choose: str = self.get_choose()
             match first_choose:
                 case '1':
                     rot_type = self.choose_rot()

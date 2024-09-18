@@ -5,7 +5,7 @@ class Buffer:
     def __init__(self):
         self.buffer_list = []
 
-    def message_to_json(self, message: dict):
+    def message_to_json(self, message: object):
         message_json = self.buffer_list.append(message.__dict__)
         return message_json
 
