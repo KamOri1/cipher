@@ -14,7 +14,7 @@ class SaveFile:
     @staticmethod
     def add_message_to_file(file_name: str, new_message: dict) -> None:
         with open(f'{FILES_DIR}{file_name}.json', 'r+') as file:
-            file_content = json.load(file)
+            file_content: list = json.load(file)
 
         file_content.append(new_message)
 
@@ -22,7 +22,7 @@ class SaveFile:
             json.dump(file_content, file, indent=4)
 
     @staticmethod
-    def save_decrypted_content(file_name, file_content, user_choose, decrypted_message):
+    def save_decrypted_content(file_name: str, file_content: list, user_choose: int, decrypted_message: str) -> None:
         file_content[user_choose]['content'] = decrypted_message
         file_content[user_choose]['status'] = SaveFile.message_status(file_content[user_choose]['status'])
         decrypted = file_content
@@ -31,8 +31,8 @@ class SaveFile:
             json.dump(decrypted, file, indent=4)
 
     @staticmethod
-    def message_status(file_content):
-        status = file_content
+    def message_status(file_content) -> str:
+        status: str = file_content
         match status:
             case 'Decrypting': return 'Encrypting'
             case 'Encrypting': return 'Decrypting'

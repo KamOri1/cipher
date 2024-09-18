@@ -1,6 +1,6 @@
 class Menu:
     @staticmethod
-    def show_menu(menu_options) -> None:
+    def show_menu(menu_options: list) -> None:
         for index, item in enumerate(menu_options, start=1):
             print(f'{index}. {item}')
 
