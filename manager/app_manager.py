@@ -50,6 +50,7 @@ class Manager(Menu):
             case 'save':
                 file_name = self.file_name()
                 Manager.save_message_to_file(self.buffer.get_last_message(), file_name)
+
         return self.buffer.get_last_message()
 
     def buffer_options(self) -> None:
