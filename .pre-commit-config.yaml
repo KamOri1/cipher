@@ -15,7 +15,8 @@ repos:
     rev: 1.7.10
     hooks:
     -   id: bandit
-        args: ['-r', 'tests']
+        args: [ "-c", "bandit.yaml" ]
+        additional_dependencies: [ "bandit[yaml]" ]
 -   repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.6.7
     hooks:
