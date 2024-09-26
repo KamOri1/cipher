@@ -1,8 +1,0 @@
-[
-    {
-        "name": "secret",
-        "content": "this is a new message",
-        "rot_type": "rot_13",
-        "status": "Decrypting"
-    }
-]

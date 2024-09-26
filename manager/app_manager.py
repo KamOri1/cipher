@@ -5,10 +5,12 @@ from cipher.files.message import Message
 from cipher.services import rot_factory, ROT_TYPE_13, ROT_TYPE_47
 from cipher.files.saver import SaveFile
 from cipher.files.reader import ReadFile
+from cipher.helpers.message_catalog import Catalog
 
 
 class Manager(Menu):
     def __init__(self, buffer) -> None:
+        Catalog().create_catalog()
         self.buffer = buffer
         self.start_menu()
 
