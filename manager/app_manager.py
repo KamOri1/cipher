@@ -68,7 +68,7 @@ class Manager(Menu):
                 self.buffer.clear_buffer()
 
     @staticmethod
-    def decrypt_message(rot_type: str, message: str) -> str:
+    def decrypt_message(rot_type: str, message: dict) -> str:
         decrypt = rot_factory(rot_type)
         decrypt_message = decrypt.decrypt(message)
         print(f"\nMessage: {decrypt_message}\n")
