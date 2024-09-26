@@ -1,1 +1,1 @@
-FILES_DIR = 'encrypted_files/'
+FILES_DIR = "./encrypted_file/"
