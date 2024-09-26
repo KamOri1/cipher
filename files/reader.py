@@ -5,7 +5,7 @@ from cipher.consts import FILES_DIR
 class ReadFile:
     @staticmethod
     def read_file(file_name: str) -> list[dict]:
-        with open(f"./{FILES_DIR}{file_name}.json", "r+") as file:
+        with open(f"{FILES_DIR}{file_name}.json", "r+") as file:
             file_content: list = json.load(file)
 
         return file_content
