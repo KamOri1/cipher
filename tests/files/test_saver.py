@@ -72,6 +72,52 @@ def test_save_message_should_create_json_file_with_list_of_dict(
     os.remove(json_file_path)
 
 
+@pytest.mark.parametrize(
+    "all_message_information, expected_json, file_name, new_message",
+    [
+        (
+            {
+                "name": "add new file",
+                "content": "something to test",
+                "rot_type": "rot13",
+                "status": "Decrypting",
+            },
+            """[
+    {
+        "name": "add new file",
+        "content": "something to test",
+        "rot_type": "rot13",
+        "status": "Decrypting"
+    },
+    {
+        "name": "next file",
+        "content": "something else",
+        "rot_type": "rot47",
+        "status": "Decrypting"
+    }
+]""",
+            "testa_add_message",
+            {
+                "name": "next file",
+                "content": "something else",
+                "rot_type": "rot47",
+                "status": "Decrypting",
+            },
+        ),
+    ],
+)
+def test_should_add_new_message_to_file(
+    mock_files_dir, all_message_information, expected_json, file_name, new_message
+):
+    SaveFile.save_message(all_message_information, file_name)
+    SaveFile.add_message_to_file(file_name, new_message)
+    json_file_path = f"json_file/{file_name}.json"
+    with open(json_file_path, "r") as f:
+        actual_json = f.read()
+    assert actual_json == expected_json
+    os.remove(json_file_path)
+
+
 def test_function_message_status_should_return_encrypting_str():
     value = "Decrypting"
     exp = "Encrypting"
