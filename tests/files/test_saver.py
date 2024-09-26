@@ -118,6 +118,50 @@ def test_should_add_new_message_to_file(
     os.remove(json_file_path)
 
 
+@pytest.mark.parametrize(
+    "file_content, expected_json, file_name, decrypted_message, user_choose",
+    [
+        (
+            [
+                {
+                    "name": "secret",
+                    "content": "guvf vf n arj zrffntr",
+                    "rot_type": "rot_13",
+                    "status": "Encrypting",
+                }
+            ],
+            """[
+    {
+        "name": "secret",
+        "content": "this is a new message",
+        "rot_type": "rot_13",
+        "status": "Decrypting"
+    }
+]""",
+            "testa_decrypted_message",
+            "this is a new message",
+            0,
+        ),
+    ],
+)
+def test_should_save_decrypted_content(
+    mock_files_dir,
+    file_content,
+    expected_json,
+    file_name,
+    decrypted_message,
+    user_choose,
+):
+    SaveFile.save_decrypted_content(
+        file_name, file_content, user_choose, decrypted_message
+    )
+    json_file_path = f"json_file/{file_name}.json"
+    with open(json_file_path, "r") as f:
+        actual_json = f.read()
+    assert actual_json == expected_json
+    os.remove(json_file_path)
+
+
 def test_function_message_status_should_return_encrypting_str():
     value = "Decrypting"
     exp = "Encrypting"
