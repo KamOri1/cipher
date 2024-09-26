@@ -2,11 +2,12 @@ from cipher.files.saver import SaveFile
 import pytest
 import cipher.files.saver
 import cipher.consts
+import os
 
 
 @pytest.fixture
 def mock_files_dir(mocker):
-    new_value = ""
+    new_value = "json_file/"
     mocker.patch.object(cipher.files.saver, "FILES_DIR", new_value)
 
 
@@ -29,10 +30,11 @@ def test_save_message_should_create_json_file_with_one_dict_list(
     mock_files_dir, all_message_information, expected_json, file_name
 ):
     SaveFile.save_message(all_message_information, file_name)
-    json_file_path = file_name + ".json"
+    json_file_path = f"json_file/{file_name}.json"
     with open(json_file_path, "r") as f:
         actual_json = f.read()
     assert actual_json == expected_json
+    os.remove(json_file_path)
 
 
 @pytest.mark.parametrize(
@@ -63,10 +65,11 @@ def test_save_message_should_create_json_file_with_list_of_dict(
     mock_files_dir, all_message_information, expected_json, file_name
 ):
     SaveFile.save_message(all_message_information, file_name)
-    json_file_path = file_name + ".json"
+    json_file_path = f"json_file/{file_name}.json"
     with open(json_file_path, "r") as f:
         actual_json = f.read()
     assert actual_json == expected_json
+    os.remove(json_file_path)
 
 
 def test_function_message_status_should_return_encrypting_str():
