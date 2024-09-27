@@ -50,15 +50,23 @@ def test_read_file_should_return_json_file_with_json(
 @pytest.mark.parametrize(
     "file_name, file_content, expected_output",
     [
-        ("file", [], "List of message in file: 'file.json' \n"),
+        ("file", [], "List of message in file: 'file.json'\n"),
         (
             "test_file",
-            ["wiadomość1"],
-            "List of messages in file: 'test_file.json' \n: wiadomość1",
+            [
+                {
+                    "name": "new file",
+                    "content": "something",
+                    "rot_type": "rot13",
+                    "status": "Decrypting",
+                }
+            ],
+            "List of message in file: 'test_file.json'\n1: {'name': 'new file', 'content': 'something', 'rot_type': 'rot13', 'status': 'Decrypting'}\n",
         ),
     ],
 )
 def test_print_file_content(file_name, file_content, expected_output, capsys):
     ReadFile.print_file_content(file_name, file_content)
     captured_output = capsys.readouterr().out
+
     assert captured_output == expected_output

@@ -12,6 +12,6 @@ class ReadFile:
 
     @staticmethod
     def print_file_content(file_name: str, file_content: list) -> None:
-        print(f"List of message in file: '{file_name}.json' ")
+        print(f"List of message in file: '{file_name}.json'")
         for index, value in enumerate(file_content, start=1):
             print(f"{index}: {value}")
