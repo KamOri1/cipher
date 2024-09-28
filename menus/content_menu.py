@@ -1,9 +1,6 @@
-from typing import Any
-
-
 class Menu:
     @staticmethod
-    def show_menu(menu_options: list[dict[str, Any]]) -> None:
+    def show_menu(menu_options: list[str]) -> None:
         for index, item in enumerate(menu_options, start=1):
             print(f"{index}. {item}")
 
