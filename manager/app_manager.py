@@ -77,7 +77,7 @@ class Manager(Menu):
 
         return decrypt_message
 
-    def collect_message_to_save(self, message: object) -> dict:
+    def collect_message_to_save(self, message: Message) -> dict:
         return self.buffer.message_to_json(message)
 
     @staticmethod
