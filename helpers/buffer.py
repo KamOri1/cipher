@@ -7,7 +7,7 @@ class Buffer:
     def __init__(self):
         self.buffer_list = []
 
-    def message_to_json(self, message: "Message"):
+    def message_to_json(self, message: "Message") -> None:
         self.buffer_list.append(message.__dict__)
 
     def get_last_message(self) -> dict[str, Any]:
