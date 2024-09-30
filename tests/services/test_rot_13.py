@@ -17,7 +17,9 @@ import pytest
         )
     ],
 )
-def test_case_1_encrypt_should_return_encrypted_message(message, expected_output):
+def test_encrypt_should_return_encrypted_message_for_message_provided_as_dict(
+    message, expected_output
+):
     rot = Rot13()
     result = rot.decrypt(message)
 
@@ -33,7 +35,9 @@ def test_case_1_encrypt_should_return_encrypted_message(message, expected_output
         )
     ],
 )
-def test_case_2_encrypt_should_return_encrypted_message(message_text, expected_output):
+def test_encrypt_should_return_encrypted_message_for_message_as_string(
+    message_text, expected_output
+):
     message = Message
     message.content = message_text
     rot = Rot13()

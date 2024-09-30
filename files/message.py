@@ -7,5 +7,3 @@ class Message:
     content: str
     rot_type: str
     status: str
-
-

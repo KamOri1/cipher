@@ -10,7 +10,7 @@ from cipher.helpers.message_catalog import Catalog
 
 class Manager(Menu):
     def __init__(self, buffer) -> None:
-        Catalog().create_catalog()
+        Catalog.create_catalog()
         self.buffer = buffer
         self.start_menu()
 
