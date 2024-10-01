@@ -14,23 +14,24 @@ def mock_start_menu(mocker):
     return manager
 
 
-def test_mock_choose_rot_should_return_correct_value(mock_start_menu, mocker):
-    manager = mock_start_menu
-    with mocker.patch("builtins.input", return_value="rot13"):
+class TestManager:
+    def test_mock_choose_rot_should_return_correct_value(self, mock_start_menu, mocker):
+        manager = mock_start_menu
+        mocker.patch("builtins.input", return_value="rot13")
         result = manager.choose_rot()
+
         assert result == "rot13"
 
-
-def test_mock_file_name_should_return_correct_value(mock_start_menu, mocker):
-    manager = mock_start_menu
-    with mocker.patch("builtins.input", return_value="new file"):
+    def test_mock_file_name_should_return_correct_value(self, mock_start_menu, mocker):
+        manager = mock_start_menu
+        mocker.patch("builtins.input", return_value="new file")
         result = manager.file_name()
+
         assert result == "new file"
 
-
-def test_mock_get_message_data_should_return_message(mock_start_menu, mocker):
-    manager = mock_start_menu
-    with mocker.patch("builtins.input", side_effect=["new file", "something"]):
+    def test_mock_get_message_data_should_return_message(self, mock_start_menu, mocker):
+        manager = mock_start_menu
+        mocker.patch("builtins.input", side_effect=["new file", "something"])
         result = manager.get_message_data("rot13", operation="Encrypting")
 
         assert result.__dict__ == {

@@ -1,5 +1,5 @@
-from cipher.manager.app_manager import Manager
-from cipher.helper.buffer import Buffer
+from manager.app_manager import Manager
+from helpers.buffer import Buffer
 
 
 def main():
