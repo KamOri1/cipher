@@ -1,11 +1,11 @@
-from cipher.manager.app_manager import Manager
-from cipher.helpers.buffer import Buffer
+from manager.app_manager import Manager
+from helpers.buffer import Buffer
 import pytest
 
 
 @pytest.fixture
 def mock_start_menu(mocker):
-    mock_start_menu = mocker.patch("cipher.manager.app_manager.Manager.start_menu")
+    mock_start_menu = mocker.patch("manager.app_manager.Manager.start_menu")
     mock_start_menu.side_effect = lambda *args, **kwargs: None
     buffer = Buffer()
     manager = Manager(buffer)

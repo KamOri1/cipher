@@ -1,5 +1,5 @@
-from cipher.services.rot_13 import Rot13
-from cipher.files.message import Message
+from services.rot_13 import Rot13
+from files.message import Message
 import pytest
 
 

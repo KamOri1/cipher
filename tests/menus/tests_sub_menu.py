@@ -1,4 +1,4 @@
-from cipher.menus.sub_menu import SubMenu
+from menus.sub_menu import SubMenu
 import pytest
 
 

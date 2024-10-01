@@ -1,5 +1,5 @@
 import json
-from cipher.consts import FILES_DIR
+from consts import FILES_DIR
 
 
 class ReadFile:

@@ -1,5 +1,5 @@
-from cipher.services.rot_47 import Rot47
-from cipher.files.message import Message
+from services.rot_47 import Rot47
+from files.message import Message
 import pytest
 
 

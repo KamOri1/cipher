@@ -1,6 +1,6 @@
 from enum import Enum
 import json
-from cipher.consts import FILES_DIR
+from consts import FILES_DIR
 
 
 class StatusType(Enum):
@@ -47,4 +47,4 @@ class SaveFile:
             case StatusType.DECRYPTING.value:
                 return StatusType.ENCRYPTING.value
             case StatusType.ENCRYPTING.value:
-                return StatusType.ENCRYPTING.value
+                return StatusType.DECRYPTING.value

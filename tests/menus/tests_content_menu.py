@@ -1,4 +1,4 @@
-from cipher.menus.content_menu import Menu
+from menus.content_menu import Menu
 import pytest
 
 

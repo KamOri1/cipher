@@ -1,5 +1,5 @@
-from cipher.files.saver import SaveFile
-from cipher.files.message import Message
+from files.saver import SaveFile
+from files.message import Message
 
 
 class Buffer:

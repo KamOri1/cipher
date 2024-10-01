@@ -1,14 +1,13 @@
-from cipher.files.saver import SaveFile
+from files.saver import SaveFile
 import pytest
-import cipher.files.saver
-import cipher.consts
+import files.saver
 import os
 
 
 @pytest.fixture
 def mock_files_dir(mocker):
     new_value = "json_file/"
-    mocker.patch.object(cipher.files.saver, "FILES_DIR", new_value)
+    mocker.patch.object(files.saver, "FILES_DIR", new_value)
 
 
 @pytest.mark.parametrize(

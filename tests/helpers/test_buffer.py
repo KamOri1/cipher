@@ -1,7 +1,6 @@
-from cipher.helpers.buffer import Buffer
-from cipher.files.message import Message
-import cipher.files.saver
-import cipher.consts
+from helpers.buffer import Buffer
+from files.message import Message
+import files.saver
 import pytest
 import os
 
@@ -9,7 +8,7 @@ import os
 @pytest.fixture
 def mock_files_dir(mocker):
     new_value = "json_file/"
-    mocker.patch.object(cipher.files.saver, "FILES_DIR", new_value)
+    mocker.patch.object(files.saver, "FILES_DIR", new_value)
 
 
 @pytest.fixture
