@@ -1,11 +1,16 @@
-from typing import Any
+from enum import Enum
 import json
-from cipher.consts import FILES_DIR
+from consts import FILES_DIR
+
+
+class StatusType(Enum):
+    ENCRYPTING = "Encrypting"
+    DECRYPTING = "Decrypting"
 
 
 class SaveFile:
     @staticmethod
-    def save_message(all_message_information: dict[str, Any] | list, file_name) -> None:
+    def save_message(all_message_information: dict[str, str] | list, file_name) -> None:
         with open(f"{FILES_DIR}{file_name}.json", "w") as file:
             if isinstance(all_message_information, dict):
                 json.dump([all_message_information], file)
@@ -13,7 +18,7 @@ class SaveFile:
                 json.dump(all_message_information, file)
 
     @staticmethod
-    def add_message_to_file(file_name: str, new_message: dict[str, Any]) -> None:
+    def add_message_to_file(file_name: str, new_message: dict[str, str]) -> None:
         with open(f"{FILES_DIR}{file_name}.json", "r+") as file:
             file_content: list = json.load(file)
 
@@ -39,7 +44,7 @@ class SaveFile:
     def message_status(file_content) -> str:
         status: str = file_content
         match status:
-            case "Decrypting":
-                return "Encrypting"
-            case "Encrypting":
-                return "Decrypting"
+            case StatusType.DECRYPTING.value:
+                return StatusType.ENCRYPTING.value
+            case StatusType.ENCRYPTING.value:
+                return StatusType.DECRYPTING.value

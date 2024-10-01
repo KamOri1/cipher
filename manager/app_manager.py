@@ -1,16 +1,16 @@
-from cipher.menus.content_menu import Menu
-from cipher.menus.menu_consts import MenuConsts
-from cipher.menus.sub_menu import SubMenu
-from cipher.files.message import Message
-from cipher.services import rot_factory, ROT_TYPE_13, ROT_TYPE_47
-from cipher.files.saver import SaveFile
-from cipher.files.reader import ReadFile
-from cipher.helpers.message_catalog import Catalog
+from menus.content_menu import Menu
+from menus.menu_consts import MenuConsts
+from menus.sub_menu import SubMenu
+from files.message import Message
+from services import rot_factory, ROT_TYPE_13, ROT_TYPE_47
+from files.saver import SaveFile
+from files.reader import ReadFile
+from helpers.message_catalog import Catalog
 
 
 class Manager(Menu):
     def __init__(self, buffer) -> None:
-        Catalog().create_catalog()
+        Catalog.create_catalog()
         self.buffer = buffer
         self.start_menu()
 

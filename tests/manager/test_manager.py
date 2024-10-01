@@ -1,11 +1,11 @@
-from cipher.manager.app_manager import Manager
-from cipher.helpers.buffer import Buffer
+from manager.app_manager import Manager
+from helpers.buffer import Buffer
 import pytest
 
 
 @pytest.fixture
 def mock_start_menu(mocker):
-    mock_start_menu = mocker.patch("cipher.manager.app_manager.Manager.start_menu")
+    mock_start_menu = mocker.patch("manager.app_manager.Manager.start_menu")
     mock_start_menu.side_effect = lambda *args, **kwargs: None
     buffer = Buffer()
     manager = Manager(buffer)
@@ -14,23 +14,24 @@ def mock_start_menu(mocker):
     return manager
 
 
-def test_mock_choose_rot_should_return_correct_value(mock_start_menu, mocker):
-    manager = mock_start_menu
-    with mocker.patch("builtins.input", return_value="rot13"):
+class TestManager:
+    def test_mock_choose_rot_should_return_correct_value(self, mock_start_menu, mocker):
+        manager = mock_start_menu
+        mocker.patch("builtins.input", return_value="rot13")
         result = manager.choose_rot()
+
         assert result == "rot13"
 
-
-def test_mock_file_name_should_return_correct_value(mock_start_menu, mocker):
-    manager = mock_start_menu
-    with mocker.patch("builtins.input", return_value="new file"):
+    def test_mock_file_name_should_return_correct_value(self, mock_start_menu, mocker):
+        manager = mock_start_menu
+        mocker.patch("builtins.input", return_value="new file")
         result = manager.file_name()
+
         assert result == "new file"
 
-
-def test_mock_get_message_data_should_return_message(mock_start_menu, mocker):
-    manager = mock_start_menu
-    with mocker.patch("builtins.input", side_effect=["new file", "something"]):
+    def test_mock_get_message_data_should_return_message(self, mock_start_menu, mocker):
+        manager = mock_start_menu
+        mocker.patch("builtins.input", side_effect=["new file", "something"])
         result = manager.get_message_data("rot13", operation="Encrypting")
 
         assert result.__dict__ == {
