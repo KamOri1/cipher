@@ -1,13 +1,19 @@
 import string
 from .rot import Rot
+from files.message import Message
 
 
 class Rot47(Rot):
-    ALPHABET_47 = string.ascii_lowercase + string.punctuation + string.digits + string.ascii_uppercase
+    ALPHABET_47 = (
+        string.ascii_lowercase
+        + string.punctuation
+        + string.digits
+        + string.ascii_uppercase
+    )
 
-    def encrypt(self, plain_text) -> str:
+    def encrypt(self, plain_text: dict | Message) -> str:
         if isinstance(plain_text, dict):
-            message: str = plain_text['content']
+            message: str = plain_text["content"]
         else:
             message: str = plain_text.content.lower()
         shifted_alphabet: str = self.ALPHABET_47[47:] + self.ALPHABET_47[:47]
@@ -18,4 +24,3 @@ class Rot47(Rot):
 
     def decrypt(self, encrypted_text) -> str:
         return self.encrypt(encrypted_text)
-

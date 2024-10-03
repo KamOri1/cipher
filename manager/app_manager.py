@@ -42,13 +42,13 @@ class Manager(Menu):
         return input("Enter file name: ")
 
     @staticmethod
-    def get_message_data(rot_type, operation) -> Message:
+    def get_message_data(rot_type: str, operation: str) -> Message:
         name = input("Enter message name: ")
         content = input("Enter message content: ")
 
         return Message(name=name, content=content, rot_type=rot_type, status=operation)
 
-    def encrypt_message(self, rot_type, fast_save=None) -> dict:
+    def encrypt_message(self, rot_type: str, fast_save: str = None) -> dict:
         message = self.get_message_data(rot_type, operation="Encrypting")
         encryptor = rot_factory(rot_type)
         message.content = encryptor.encrypt(message)
