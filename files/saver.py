@@ -41,7 +41,7 @@ class SaveFile:
             json.dump(decrypted, file, indent=4)
 
     @staticmethod
-    def message_status(file_content) -> str:
+    def message_status(file_content: str) -> str:
         status: str = file_content
         match status:
             case StatusType.DECRYPTING.value:
